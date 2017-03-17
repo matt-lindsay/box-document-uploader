@@ -1,9 +1,3 @@
-// Algorith:
-// 1. Read documents into a list.
-// 2. Create a folder for each file, get the ID of that folder.
-// 3. Create a sub folder called ORIGINAL, get the ID of that folder.
-// 4. Upload the document into the ORIGINAL folder.
-
 // File System to access files on this machine.
 var fs = require('fs');
 
