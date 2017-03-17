@@ -1,0 +1,9 @@
+# Git Ignore File
+
+# Config Files
+launch.json
+
+# Project Dependencies
+node_modules/
+docs/
+logs/
