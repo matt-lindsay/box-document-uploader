@@ -19,13 +19,19 @@ var i = 0;
 // Initial folder to add content to.
 var rootFolder = 14274812032;
 
+var initialFolders = [];
+
+client.on('greeting', function (msg) {
+    console.log(msg);
+});
+
 // Read the document directory and start the process.
 fs.readdir('./docs/', function (err, files) {
     if (err) throw err;
     files.forEach(function (item) {
-        console.log('Process: ' + i + ', Document: ' + item);
+        //console.log('Process: ' + i + ', Document: ' + item);
         // Compile the log record.
-        var data = 'Process: ' + i + ', Document: ' + item + '\n';
+        var data = 'Process: ' + i + ', Document Found: ' + item + '\n';
         // Send the log record to the logger.
         logger(data);
         createFolder(rootFolder, item, i);
@@ -42,34 +48,35 @@ function createFolder (parentId, docName, procid) {
         var data = 'Process: ' + procid + ', createFolder Response: ' + response.id + ', Folder Name: ' + response.name + '\n';
         // Send the log record to the logger.
         logger(data);
-        createSubFolder(response.id, docName, procid);
+        //createSubFolder(response.id, docName, procid);
+        initialFolders.push([parentId, response.id, docName]);
     });
 }
 
 // Called function to create a sub folder.
-function createSubFolder (folderId, docName, procid) {
-     client.folders.create(folderId, 'ORIGINAL', function (err, response) {
-        if (err) throw err;
-        // Compile the log record.
-        var data = 'Process: ' + procid + ', createSubFolder Response: ' + response.id + ', Folder Name: ' + response.name + '\n';
-        // Send the log record to the logger.
-        logger(data);
-        uploadDocument(response.id, docName, procid);
-    });
-}
+//function createSubFolder (folderId, docName, procid) {
+//     client.folders.create(folderId, 'ORIGINAL', function (err, response) {
+//        if (err) throw err;
+//        // Compile the log record.
+//        var data = 'Process: ' + procid + ', createSubFolder Response: ' + response.id + ', Folder Name: ' + response.name + '\n';
+//        // Send the log record to the logger.
+//        logger(data);
+//        uploadDocument(response.id, docName, procid);
+//    });
+//}
 
 // Called function to upload a document.
-function uploadDocument (parentId, docName, procid) {
-    // Set a stream up to the file system.
-    var stream = fs.createReadStream('./docs/' + docName);
-    client.files.uploadFile(parentId, docName, stream, function (err, response) {
-        if (err) throw err;
-        // Compile the log record.
-        var data = 'Process: ' + procid + ', uploadDocument Response: ' + response.entries[0].id + ', Document Name: ' + response.entries[0].name + '\n';
-        // Send the log record to the logger.
-        logger(data);
-    });
-}
+//function uploadDocument (parentId, docName, procid) {
+//    // Set a stream up to the file system.
+//    var stream = fs.createReadStream('./docs/' + docName);
+//    client.files.uploadFile(parentId, docName, stream, function (err, response) {
+//        if (err) throw err;
+//        // Compile the log record.
+//        var data = 'Process: ' + procid + ', uploadDocument Response: ' + response.entries[0].id + ', Document Name: ' + response.entries[0].name + '\n';
+//        // Send the log record to the logger.
+//        logger(data);
+//    });
+//}
 
 // Called function to write a log record out.
 function logger (data) {

@@ -19,4 +19,8 @@ Place the documents you want to upload into your Box account in the docs folder.
 
 #### Roadmap
 
-1. Persitent authentication
+1. Persistent authentication
+
+
+!!! Box API only takes 10 requests per second, this overloads the Box API after more than 10 documents are processed.
+Will re-evaluate at a later date.
